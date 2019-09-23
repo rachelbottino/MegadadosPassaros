@@ -10,9 +10,9 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS adiciona_usuario;
 DELIMITER //
-CREATE PROCEDURE adiciona_usuario(IN primeiro_nome VARCHAR(20), ultimo_nome VARCHAR(20), email VARCHAR(50), id_cidade INT)
+CREATE PROCEDURE adiciona_usuario(IN primeiro_nome VARCHAR(20), IN ultimo_nome VARCHAR(20), IN email VARCHAR(50), IN username varchar(100), IN id_cidade INT)
 BEGIN
-	INSERT INTO usuario (primeiro_nome, ultimo_nome, email, id_cidade) VALUES (primeiro_nome, ultimo_nome, email, id_cidade);
+	INSERT INTO usuario (primeiro_nome, ultimo_nome, email, username, id_cidade) VALUES (primeiro_nome, ultimo_nome, email, username, id_cidade);
 END//
 DELIMITER ;
 

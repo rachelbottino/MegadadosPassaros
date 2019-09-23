@@ -12,6 +12,7 @@ CREATE TABLE usuario (
     primeiro_nome VARCHAR(20) NOT NULL,
     ultimo_nome VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(50) NOT NULL UNIQUE,
     id_cidade INT NOT NULL,
     FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
 );
