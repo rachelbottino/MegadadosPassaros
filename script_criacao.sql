@@ -4,7 +4,7 @@ USE passaros;
 
 CREATE TABLE cidade (
 	id_cidade INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome_cidade VARCHAR(50)
+    nome_cidade VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE usuario (
