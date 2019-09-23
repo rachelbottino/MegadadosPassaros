@@ -25,7 +25,7 @@ CALL adiciona_usuario('Otávio', 'Hon', 'otavio.hon@gmail.com', 'otaviohon', 10)
 CALL adiciona_usuario('Rafaela', 'Bosi', 'rafabosi@gmail.com', 'rafabosi', 1);
 CALL adiciona_usuario('Julia', 'Campos', 'jucampos@gmail.com', 'jucampos', 1);
 
-#ADICIONANDO AVES
+#ADICIONANDO PASSAROS
 CALL adiciona_passaro('Canário');
 CALL adiciona_passaro('Bem-te-vi');
 CALL adiciona_passaro('Papagaio');
@@ -44,6 +44,38 @@ CALL adiciona_passaro('Arara-azul');
 CALL adiciona_passaro('Arara');
 CALL adiciona_passaro('Ararinha');
 CALL adiciona_passaro('Pardal');
+
+#ADICIONANDO PREFERENCIAS
+CALL adiciona_preferencia(1,1);
+CALL adiciona_preferencia(1,4);
+CALL adiciona_preferencia(1,10);
+CALL adiciona_preferencia(2,1);
+CALL adiciona_preferencia(2,18);
+CALL adiciona_preferencia(3,3);
+CALL adiciona_preferencia(3,12);
+CALL adiciona_preferencia(3,13);
+CALL adiciona_preferencia(3,16);
+CALL adiciona_preferencia(4,2);
+CALL adiciona_preferencia(4,5);
+CALL adiciona_preferencia(5,7);
+CALL adiciona_preferencia(6,11);
+CALL adiciona_preferencia(6,17);
+CALL adiciona_preferencia(7,15);
+CALL adiciona_preferencia(7,18);
+CALL adiciona_preferencia(8,12);
+CALL adiciona_preferencia(8,13);
+CALL adiciona_preferencia(8,15);
+CALL adiciona_preferencia(8,16);
+CALL adiciona_preferencia(9,9);
+CALL adiciona_preferencia(10,1);
+CALL adiciona_preferencia(10,4);
+CALL adiciona_preferencia(10,5);
+CALL adiciona_preferencia(11,2);
+CALL adiciona_preferencia(11,17);
+CALL adiciona_preferencia(12,2);
+CALL adiciona_preferencia(13,14);
+CALL adiciona_preferencia(13,15);
+CALL adiciona_preferencia(13,18);
 
 SELECT * FROM cidade;
 SELECT * FROM usuario;
