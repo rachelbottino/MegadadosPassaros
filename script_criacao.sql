@@ -43,8 +43,8 @@ CREATE TABLE visualizou (
 	id_view INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_post INT NOT NULL,
     id_usuario INT NOT NULL,
-    aparelho VARCHAR(50) NOT NULL,
-    browser VARCHAR(50) NOT NULL,
+    aparelho VARCHAR(50),
+    browser VARCHAR(50),
     ip VARCHAR(20) NOT NULL,
     instante DATETIME NOT NULL,
     FOREIGN KEY (id_post) REFERENCES post (id_post),
@@ -54,6 +54,7 @@ CREATE TABLE visualizou (
 CREATE TABLE menciona (
 	id_post INT NOT NULL,
     id_usuario INT NOT NULL,
+    ativo BOOLEAN DEFAULT 1, 
     PRIMARY KEY (id_post, id_usuario),
     FOREIGN KEY (id_post) REFERENCES post (id_post),
     FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
@@ -62,6 +63,7 @@ CREATE TABLE menciona (
 CREATE TABLE referencia (
 	id_post INT NOT NULL,
     id_passaro INT NOT NULL,
+    ativo BOOLEAN DEFAULT 1,
     PRIMARY KEY (id_post, id_passaro),
     FOREIGN KEY (id_post) REFERENCES post (id_post),
     FOREIGN KEY (id_passaro) REFERENCES passaro (id_passaro)
