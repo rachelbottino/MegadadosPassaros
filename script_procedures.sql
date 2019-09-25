@@ -39,3 +39,19 @@ BEGIN
 	INSERT INTO post (id_usuario, titulo, texto, url_foto) VALUES (id_usuario, titulo, texto, url_foto);
 END//
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS adiciona_mencao;
+DELIMITER //
+CREATE PROCEDURE adiciona_mencao(IN id_post INT, IN id_usuario INT)
+BEGIN
+	INSERT INTO menciona (id_post, id_usuario) VALUES (id_post, id_usuario);
+END//
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS adiciona_referencia;
+DELIMITER //
+CREATE PROCEDURE adiciona_referencia(IN id_post INT, IN id_passaro INT)
+BEGIN
+	INSERT INTO referencia (id_post, id_passaro) VALUES (id_post, id_passaro);
+END//
+DELIMITER ;
