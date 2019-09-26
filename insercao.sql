@@ -80,6 +80,7 @@ CALL adiciona_preferencia(13,18);
 #ADICIONDO POSTS
 CALL adiciona_post(1,'Visita ao parque', 'Encontrei um #Canário durante a visita ao Ibirapuera com o @caiov', 'www.fotourl.com/12345'); 
 CALL adiciona_post(10,'Parque dos pássaros', 'Visitei hoje o parque dos pássaros! Ótima oportunidade para observar diversas espécies', 'www.fotourl.com/56789'); 
+CALL adiciona_post(5,'Encontrinho', 'Ontem no encontro de amantes de pássaros com @monica @giovanas e @jucampos . Vimos #Flamingo #Catatua e #Arara', 'www.fotourl.com/222222'); 
 
 SELECT * FROM cidade;
 SELECT * FROM usuario;

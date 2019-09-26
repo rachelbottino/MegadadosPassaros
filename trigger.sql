@@ -1,20 +1,14 @@
+DROP TRIGGER IF EXISTS apaga_comentario;
 DELIMITER //
 CREATE TRIGGER apaga_comentario
 AFTER UPDATE
    ON post FOR EACH ROW
 
 BEGIN
-	IF NEW.ativa = False THEN
-		#update na tabela de menções de usuarios
-		UPDATE menciona
-		SET ativa = False 
-		WHERE id_post = post.id_post;
-		
-		#update na tabela de referências de pássaros
-		UPDATE referencia
-		SET ativa = False
-		WHERE id_post = post.id_post;
+	IF NEW.ativo = 0 THEN
+		SET @id_post = NEW.id_post;        
+        UPDATE menciona SET ativo = 0 WHERE menciona.id_post = @id_post;
+        UPDATE referencia SET ativo = 0 WHERE referencia.id_post = @id_post;
 	END IF;
-
 END; //
 DELIMITER ;
