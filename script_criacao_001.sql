@@ -17,6 +17,9 @@ CREATE TABLE usuario (
     FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
 );
 
+ALTER TABLE usuario
+    ADD CONSTRAINT nome_sobrenome UNIQUE(primeiro_nome, ultimo_nome);    -- adicionado para nome e sobrenome únicos
+
 CREATE TABLE passaro (
 	id_passaro INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     especie VARCHAR(100) UNIQUE
