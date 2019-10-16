@@ -75,7 +75,7 @@ CREATE TABLE joinha (
     id_usuario INT NOT NULL,
     reacao BOOLEAN,
     ativo BOOLEAN DEFAULT 1,
-    PRIMARY KEY (id_post, id_passaro),
+    PRIMARY KEY (id_post, id_usuario),
     FOREIGN KEY (id_post) REFERENCES post (id_post),
     FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
 );
