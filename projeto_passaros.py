@@ -6,7 +6,7 @@ import pymysql
 def insert_cidade(conn, nome):
     with conn.cursor() as cursor:
         try:
-            cursor.execute('INSERT INTO cidade (nome_cidade) VALUES (%s)', (nome))
+            cursor.execute('CALL adiciona_cidade(%s)', (nome))
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não é possível inserir {nome} na tabela cidade')
 
@@ -43,11 +43,11 @@ def lista_cidades(conn):
 def insert_usuario(conn, nome,sobrenome, email, username, id_cidade):
     with conn.cursor() as cursor:
         try:
-            cursor.execute('INSERT INTO usuario (primeiro_nome, ultimo_nome, email, username, id_cidade) VALUES (%s,%s,%s,%s,%s)', (nome,sobrenome,email,username, id_cidade))
+            cursor.execute('CALL adiciona_usuario(%s,%s,%s,%s,%s)', (nome,sobrenome,email,username, id_cidade))
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não é possível inserir {nome} na tabela usuario')
 
-def find_usuario(conn, nome,sobrenome):
+def find_usuario(conn, nome,sobrenome): #achar por username
     with conn.cursor() as cursor:
         cursor.execute('SELECT id_usuario FROM usuario WHERE primeiro_nome = %s AND ultimo_nome = %s', (nome,sobrenome))
         res = cursor.fetchone()
@@ -97,7 +97,7 @@ def lista_usuarios(conn):
 def insert_passaro(conn, especie): 
     with conn.cursor() as cursor:
         try:
-            cursor.execute('INSERT INTO passaro (especie) VALUES (%s)', (especie))
+            cursor.execute('CALL adiciona_passaro(%s)', (especie))
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não é possível inserir {especie} na tabela passaro')
 
@@ -133,7 +133,7 @@ def lista_passaros(conn):
 ###################################################################################################################################
 def insert_preferencia_passaro(conn, id_usuario, id_passaro):
     with conn.cursor() as cursor:
-        cursor.execute('INSERT INTO preferencia_passaro VALUES (%s, %s)', (id_usuario, id_passaro))
+        cursor.execute('CALL adiciona_preferencia(%s, %s)', (id_usuario, id_passaro))
 
 def remove_preferencia_passaro(conn, id_usuario, id_passaro):
     with conn.cursor() as cursor:
@@ -148,10 +148,10 @@ def lista_preferencias_passaro(conn, id_usuario):
 ##########################################################################################
 #post
 ##########################################################################################
-def insert_post(conn, id_usuario,titulo, texto, url_foto,ativo):
+def insert_post(conn, id_usuario,titulo, texto, url_foto):
     with conn.cursor() as cursor:
         try:
-            cursor.execute('INSERT INTO post (id_usuario, titulo, texto, url_foto,ativo) VALUES (%s,%s,%s,%s,%s)', (id_usuario,titulo, texto, url_foto,ativo))
+            cursor.execute('CALL adiciona_post(%s,%s,%s,%s)', (id_usuario,titulo, texto, url_foto))
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não é possível inserir {titulo} na tabela post')
 
@@ -189,10 +189,10 @@ def update_post_url_foto(conn, id, novo_url):
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não posso alterar url do id {id} para {novo_url} na tabela post')
 
-def update_post_ativo_foto(conn, id, novo_ativo):
+def update_post_ativo(conn, id, novo_ativo): 
     with conn.cursor() as cursor:
         try:
-            cursor.execute('UPDATE post SET id_ativo=%s where id_post=%s', (novo_ativo, id))
+            cursor.execute('UPDATE post SET ativo=%s where id_post=%s', (novo_ativo, id))
         except pymysql.err.IntegrityError as e:
             raise ValueError(f'Não posso alterar ativo do id {id} para {novo_ativo} na tabela post')
 
@@ -209,9 +209,9 @@ def lista_posts(conn):
 def insert_visualizou(conn, id_post,id_usuario, aparelho, browser,ip,instante):
     with conn.cursor() as cursor:
         try:
-            cursor.execute('INSERT INTO visualizou (id_post,id_usuario, aparelho, browser,ip,instante) VALUES (%s,%s,%s,%s,%s,%s)', (id_post,id_usuario, aparelho, browser,ip,instante))
+            cursor.execute('CALL adiciona_visualizacao(%s,%s,%s,%s,%s,%s)', (id_post,id_usuario, aparelho, browser,ip,instante))
         except pymysql.err.IntegrityError as e:
-            raise ValueError(f'Não é possível inserir {visualizada} na tabela visualizou')
+            raise ValueError(f'Não é possível inserir na tabela visualizou')
 
 def find_visualizou(conn, id_post):
     with conn.cursor() as cursor:
@@ -237,17 +237,24 @@ def lista_visualizadas(conn):
 ##################################################################################################
 #menciona
 ##################################################################################################
-def insert_mencao(conn, id_post, id_usuario, ativo):
+def insert_mencao(conn, id_post, id_usuario):
     with conn.cursor() as cursor:
-        cursor.execute('INSERT INTO menciona VALUES (%s, %s, %s)', (id_post, id_usuario, ativo))
+        cursor.execute('CALL adiciona_mencao(%s, %s)', (id_post, id_usuario))
 
 def remove_mencao(conn, id_post, id_usuario):
     with conn.cursor() as cursor:
         cursor.execute('DELETE FROM menciona WHERE id_post=%s AND id_usuario=%s',(id_post, id_usuario))
 
+def update_mencao_ativo(conn, id_post,id_usuario, novo_ativo): 
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('UPDATE menciona SET ativo=%s where id_post=%s AND id_usuario = %s', (novo_ativo, id_post,id_usuario))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não posso alterar ativo do id para {novo_ativo} na tabela mencao')
+
 def lista_mencoes(conn, id_post):
     with conn.cursor() as cursor:
-        cursor.execute('SELECT id_usuario FROM menciona WHERE id_post=%s', (id_post))
+        cursor.execute('SELECT id_usuario FROM menciona WHERE id_post=%s ', (id_post))
         res = cursor.fetchall()
         mencoes = tuple(x[0] for x in res)
         return mencoes
@@ -255,13 +262,20 @@ def lista_mencoes(conn, id_post):
 ###############################################################################################
 #referencia
 ###############################################################################################
-def insert_referencia(conn, id_post, id_passaro, ativo):
+def insert_referencia(conn, id_post, id_passaro):
     with conn.cursor() as cursor:
-        cursor.execute('INSERT INTO referencia VALUES (%s, %s,%s)', (id_post, id_passaro, ativo))
+        cursor.execute('CALL adiciona_referencia(%s, %s)', (id_post, id_passaro))
 
 def remove_referencia(conn, id_post, id_passaro):
     with conn.cursor() as cursor:
         cursor.execute('DELETE FROM referencia WHERE id_post=%s AND id_passaro=%s',(id_post, id_passaro))
+
+def update_referencia_ativo(conn, id_post,id_passaro, novo_ativo): 
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('UPDATE referencia SET ativo=%s where id_post=%s AND id_passaro=%s', (novo_ativo, id_post,id_passaro))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não posso alterar ativo do id para {novo_ativo} na tabela referencia')
 
 def lista_referencia(conn, id_post):
     with conn.cursor() as cursor:
@@ -269,3 +283,85 @@ def lista_referencia(conn, id_post):
         res = cursor.fetchall()
         referencias = tuple(x[0] for x in res)
         return referencias
+
+#################################################################################################
+#joinhas
+#################################################################################################
+def insert_joinha(conn, id_post,id_usuario,reacao):
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('CALL adiciona_joinha(%s,%s,%s)', (id_post,id_usuario,reacao))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não é possível inserir na tabela joinha')
+
+def find_joinha(conn, id_post, id_usuario):
+    with conn.cursor() as cursor:
+        cursor.execute('SELECT id_view FROM joinha WHERE id_post = %s AND id_usuario = %s', (id_post,id_usuario))
+        res = cursor.fetchone()
+        if res:
+            return res[0]
+        else:
+            return None
+
+def remove_joinha(conn, id_post, id_usuario):
+    with conn.cursor() as cursor:
+        cursor.execute('DELETE FROM joinha WHERE id_post=%s AND id_usuario=%s', (id_post,id_usuario))
+
+def update_joinha_ativo(conn, id_post,id_usuario, novo_ativo): 
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('UPDATE joinha SET ativo=%s where id_post=%s AND id_usuario=%s', (novo_ativo, id_post,id_usuario))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não posso alterar ativo do id para {novo_ativo} na tabela joinha')
+def update_reacao_joinha(conn, id_post,id_usuario, nova_reacao): 
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('UPDATE joinha SET reacao=%s where id_post=%s AND id_usuario=%s', (nova_reacao, id_post,id_usuario))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não posso alterar reacao do id para {nova_reacao} na tabela joinha')
+
+
+def lista_joinhas(conn,id_post):
+    with conn.cursor() as cursor:
+        cursor.execute('SELECT id_usuario FROM joinha WHERE id_post=%s ', (id_post))
+        res = cursor.fetchall()
+        joinhas = tuple(x[0] for x in res)
+        return joinhas
+
+##############################################################################################################
+#segue
+##############################################################################################################
+def insert_segue(conn, id_usuario,id_usuario_seguido):
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('CALL adiciona_segue(%s,%s)', (id_usuario,id_usuario_seguido))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não é possível inserir na tabela segue')
+
+def find_segue(conn, id_usuario, id_usuario_seguido):
+    with conn.cursor() as cursor:
+        cursor.execute('SELECT id_view FROM segue WHERE id_usuario = %s AND id_usuario_seguido = %s', (id_usuario,id_usuario_seguido))
+        res = cursor.fetchone()
+        if res:
+            return res[0]
+        else:
+            return None
+
+def remove_segue(conn, id_usuario, id_usuario_seguido):
+    with conn.cursor() as cursor:
+        cursor.execute('DELETE FROM segue WHERE id_usuario=%s AND id_usuario_seguido=%s', (id_usuario,id_usuario_seguido))
+
+def update_segue_ativo(conn, id_usuario,id_usuario_seguido, novo_ativo): 
+    with conn.cursor() as cursor:
+        try:
+            cursor.execute('UPDATE segue SET ativo=%s where id_usuario=%s AND id_usuario_seguido=%s', (novo_ativo, id_usuario,id_usuario_seguido))
+        except pymysql.err.IntegrityError as e:
+            raise ValueError(f'Não posso alterar ativo do id para {novo_ativo} na tabela segue')
+
+
+def lista_seguidas(conn,id_usuario):
+    with conn.cursor() as cursor:
+        cursor.execute('SELECT id_usuario_seguido FROM segue WHERE id_usuario=%s ', (id_usuario))
+        res = cursor.fetchall()
+        seguidas = tuple(x[0] for x in res)
+        return seguidas
