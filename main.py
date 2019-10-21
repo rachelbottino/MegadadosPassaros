@@ -190,15 +190,16 @@ async def adiciona_visualizacao(visualizacao: Visualizacao):
 
     try:
         hostname = socket.gethostname()    
-        IPAddr = socket.gethostbyname(hostname)
+        #IPAddr = socket.gethostbyname(hostname)
+        IPAddr = '127.0.0.1'
         instante = datetime.now()
         instante = instante.strftime('%Y-%m-%d %H:%M:%S')
         usuario_id = find_usuario(conn,visualizacao.nome_usuario,visualizacao.sobrenome_usuario)
         post_id = find_post(conn, visualizacao.titulo_post)
-        insert_visualizou(conn, post_id, usuario_id,visualizacao.aparelho, visualizacao.browser, IPAddr, visualizacao.aparelho, visualizacao.browser,instante )
+        insert_visualizou(conn, post_id, usuario_id,visualizacao.aparelho, visualizacao.browser, IPAddr,instante )
     except Exception as e:
         print(e)
-    return {'visualizacao adicionada':visualizacao.titulo}
+    return {'visualizacao adicionada':visualizacao.titulo_post}
 
 @app.post("/adiciona/referencia")
 async def adiciona_referencia(referencia: Referencia):
@@ -209,18 +210,18 @@ async def adiciona_referencia(referencia: Referencia):
         insert_referencia(conn, post_id, passaro_id)
     except Exception as e:
         print(e)
-    return {'referencia adicionada':referencia.nome_usuario}
+    return {'referencia adicionada':referencia.titulo_post}
 
 @app.post("/adiciona/menciona")
 async def adiciona_menciona(menciona: Menciona):
 
     try:
-        usuario_id = find_usuario(conn,mencao.nome_usuario,mencao.sobrenome_usuario)
-        post_id = find_post(conn,mencao.titulo_post)
+        usuario_id = find_usuario(conn,menciona.nome_usuario,menciona.sobrenome_usuario)
+        post_id = find_post(conn,menciona.titulo_post)
         insert_mencao(conn, post_id, usuario_id)
     except Exception as e:
         print(e)
-    return {'mencao adicionada':mencao.nome_usuario}
+    return {'mencao adicionada':menciona.nome_usuario}
 
 @app.post("/adiciona/joinna")
 async def adiciona_joinha(joinha: Joinha):
@@ -310,12 +311,12 @@ async def remove_preferencia1(preferencia: Preferencia):
 async def remove_mencao1(menciona: Menciona):
 
     try:
-        usuario_id = find_usuario(conn,mencao.nome_usuario,mencao.sobrenome_usuario)
-        post_id = find_post(conn,mencao.titulo)
+        usuario_id = find_usuario(conn,menciona.nome_usuario,menciona.sobrenome_usuario)
+        post_id = find_post(conn,menciona.titulo_post)
         update_mencao_ativo(conn, post_id,usuario_id,0)
     except Exception as e:
         print(e)
-    return {'mencao removido':mencao.titulo}
+    return {'mencao removido':menciona.titulo_post}
 
 @app.post("/remove/referencia")
 async def remove_referencia1(referencia: Referencia):
@@ -326,18 +327,18 @@ async def remove_referencia1(referencia: Referencia):
         update_referencia_ativo(conn, post_id,passaro_id,0)
     except Exception as e:
         print(e)
-    return {'referencia removido':referencia.titulo}
+    return {'referencia removido':referencia.titulo_post}
 
 @app.post("/remove/joinha")
 async def remove_joinha1(joinha: Joinha):
 
     try:
-        post_id = find_post(conn,joinha.titulo)
+        post_id = find_post(conn,joinha.titulo_post)
         usuario_id = find_usuario(conn,joinha.nome_usuario,joinha.sobrenome_usuario)
         update_joinha_ativo(conn, post_id,usuario_id,0)
     except Exception as e:
         print(e)
-    return {'joinha removido':joinha.titulo}
+    return {'joinha removido':joinha.titulo_post}
 
 @app.post("/remove/segue")
 async def remove_segue1(segue: Segue):
