@@ -397,7 +397,6 @@ class TestProjeto(unittest.TestCase):
         titulo = 'Novo passaro'
         texto = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
 
 
 
@@ -406,7 +405,7 @@ class TestProjeto(unittest.TestCase):
         id_cidade = find_cidade(conn,'Campinas')
         insert_usuario(conn,'Joao','Castro','jc@gmail.com','jppcca',id_cidade)
         id_usuario = find_usuario(conn,'Joao','Castro')
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
 
 
         # Checa se a post existe.
@@ -421,14 +420,14 @@ class TestProjeto(unittest.TestCase):
         titulo = 'Novo passaro'
         texto = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
+        
 
         conn = self.__class__.connection
         insert_cidade(conn,'Campinas')
         id_cidade = find_cidade(conn,'Campinas')
         insert_usuario(conn,'Joao','Castro','jc@gmail.com','jppcaa',id_cidade)
         id_usuario = find_usuario(conn,'Joao','Castro')
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
 
         res = lista_posts(conn)
@@ -443,7 +442,6 @@ class TestProjeto(unittest.TestCase):
         titulo = 'Novo passaro'
         texto = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
 
         conn = self.__class__.connection
 
@@ -451,7 +449,7 @@ class TestProjeto(unittest.TestCase):
         id_cidade = find_cidade(conn,'Campinas')
         insert_usuario(conn,'Joao','Castro','jc@gmail.com','jppcaaa',id_cidade)
         id_usuario = find_usuario(conn,'Joao','Castro')
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
 
 
@@ -466,7 +464,7 @@ class TestProjeto(unittest.TestCase):
         update_post_url_foto(conn, id_post, 'novourl.com.br')
 
         #tenta mudar ativo
-        update_post_url_foto(conn, id_post, 0)
+        update_post_ativo(conn, id_post, 0)
 
 
     def test_lista_posts(self):
@@ -478,7 +476,6 @@ class TestProjeto(unittest.TestCase):
         texto2 = 'Novo passaro encontrado'
         texto3 = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
 
         conn = self.__class__.connection
 
@@ -493,11 +490,11 @@ class TestProjeto(unittest.TestCase):
 
         # Adiciona algumas posts.
         posts_id = []
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario, titulo2, texto2, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo2, texto2, url_foto)
         id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario, titulo3, texto3, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo3, texto3, url_foto)
         id_post = find_post(conn, titulo)
         posts_id.append(find_post(conn,titulo ))
         posts_id.append(find_post(conn,titulo2 ))
@@ -524,7 +521,6 @@ class TestProjeto(unittest.TestCase):
         aparelho = 'android'
         ip = '127.0.0.1'
         browser = 'chrome'
-        ativo = 1
         titulo = 'Novo passaro'
         texto = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
@@ -538,7 +534,7 @@ class TestProjeto(unittest.TestCase):
         id_cidade = find_cidade(conn,'Campinas')
         insert_usuario(conn,'Joao','Castro','jc@gmail.com','jppcaaas',id_cidade)
         id_usuario = find_usuario(conn,'Joao','Castro')
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
 
         insert_visualizou(conn,id_post, id_usuario, aparelho, browser, ip, instante)
@@ -560,7 +556,6 @@ class TestProjeto(unittest.TestCase):
         aparelho = 'android'
         ip = '127.0.0.1'
         browser = 'chrome'
-        ativo = 1
         titulo = 'titulo passaro'
         titulo2 = 'titulo passaro2'
         titulo3 = 'titulo passaro 3'
@@ -575,11 +570,11 @@ class TestProjeto(unittest.TestCase):
         id_cidade = find_cidade(conn,'Campinas')
         insert_usuario(conn,'Joao','Castro','jc@gmail.com','jppcaaassd',id_cidade)
         id_usuario = find_usuario(conn,'Joao','Castro')
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post2 = find_post(conn, titulo)
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post3 = find_post(conn, titulo)
 
         # Verifica que ainda não tem visualizous no sistema.
@@ -600,7 +595,7 @@ class TestProjeto(unittest.TestCase):
 
 
 ###############################################################################################################################
-#referencia
+#menciona
 #################################################################################################################################
     def test_insert_menciona(self):
 
@@ -611,7 +606,6 @@ class TestProjeto(unittest.TestCase):
         texto2 = 'Novo passaro encontrado'
         texto3 = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
 
         conn = self.__class__.connection
     
@@ -632,23 +626,23 @@ class TestProjeto(unittest.TestCase):
 
         #cria alguns posts
         posts_id = []
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario2, titulo2, texto2, url_foto, ativo)
-        id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario3, titulo3, texto3, url_foto, ativo)
-        id_post = find_post(conn, titulo)
+        insert_post(conn,id_usuario2, titulo2, texto2, url_foto)
+        id_post = find_post(conn, titulo2)
+        insert_post(conn,id_usuario3, titulo3, texto3, url_foto)
+        id_post = find_post(conn, titulo3)
         posts_id.append(find_post(conn,titulo ))
         posts_id.append(find_post(conn,titulo2 ))
         posts_id.append(find_post(conn,titulo3 ))
 
         # adiciona preferencia de passaro.
-        insert_mencao(conn,posts_id[0], usuarios_id[0], ativo)
-        insert_mencao(conn,posts_id[1], usuarios_id[1], ativo)
-        insert_mencao(conn,posts_id[2], usuarios_id[2], ativo)
-        insert_mencao(conn,posts_id[0], usuarios_id[1], ativo)
-        insert_mencao(conn,posts_id[1], usuarios_id[2], ativo)
-        insert_mencao(conn,posts_id[2], usuarios_id[0], ativo)
+        insert_mencao(conn,posts_id[0], usuarios_id[0])
+        insert_mencao(conn,posts_id[1], usuarios_id[1])
+        insert_mencao(conn,posts_id[2], usuarios_id[2])
+        insert_mencao(conn,posts_id[0], usuarios_id[1])
+        insert_mencao(conn,posts_id[1], usuarios_id[2])
+        insert_mencao(conn,posts_id[2], usuarios_id[0])
     
 
         res = lista_mencoes(conn, posts_id[0])
@@ -659,6 +653,24 @@ class TestProjeto(unittest.TestCase):
 
         res = lista_mencoes(conn, posts_id[2])
         self.assertCountEqual(res, (usuarios_id[2], usuarios_id[0]))
+    def test_update_ativo(self):
+        titulo = 'titulo passaro'
+        texto = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
+        id_post = find_post(conn, titulo)
+        insert_mencao(conn,id_post, id_usuario)
+        #tenta mudar ativo
+        update_mencao_ativo(conn, id_post, id_usuario, 0)
+
+
 ###################################################################################################################################
 #Referencia
 ####################################################################################################################################
@@ -671,7 +683,6 @@ class TestProjeto(unittest.TestCase):
         texto2 = 'Novo passaro encontrado'
         texto3 = 'Novo passaro encontrado'
         url_foto = 'foto.com.br'
-        ativo = 1
 
         conn = self.__class__.connection
     
@@ -698,23 +709,23 @@ class TestProjeto(unittest.TestCase):
 
         #cria alguns posts
         posts_id = []
-        insert_post(conn,id_usuario, titulo, texto, url_foto, ativo)
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
         id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario2, titulo2, texto2, url_foto, ativo)
-        id_post = find_post(conn, titulo)
-        insert_post(conn,id_usuario3, titulo3, texto3, url_foto, ativo)
-        id_post = find_post(conn, titulo)
+        insert_post(conn,id_usuario2, titulo2, texto2, url_foto)
+        id_post = find_post(conn, titulo2)
+        insert_post(conn,id_usuario3, titulo3, texto3, url_foto)
+        id_post = find_post(conn, titulo3)
         posts_id.append(find_post(conn,titulo ))
         posts_id.append(find_post(conn,titulo2 ))
         posts_id.append(find_post(conn,titulo3 ))
 
         # adiciona preferencia de passaro.
-        insert_referencia(conn,posts_id[0], passaros_id[0], ativo)
-        insert_referencia(conn,posts_id[1], passaros_id[1], ativo)
-        insert_referencia(conn,posts_id[2], passaros_id[2], ativo)
-        insert_referencia(conn,posts_id[0], passaros_id[1], ativo)
-        insert_referencia(conn,posts_id[1], passaros_id[2], ativo)
-        insert_referencia(conn,posts_id[2], passaros_id[0], ativo)
+        insert_referencia(conn,posts_id[0], passaros_id[0])
+        insert_referencia(conn,posts_id[1], passaros_id[1])
+        insert_referencia(conn,posts_id[2], passaros_id[2])
+        insert_referencia(conn,posts_id[0], passaros_id[1])
+        insert_referencia(conn,posts_id[1], passaros_id[2])
+        insert_referencia(conn,posts_id[2], passaros_id[0])
     
 
         res = lista_referencia(conn, posts_id[0])
@@ -725,6 +736,181 @@ class TestProjeto(unittest.TestCase):
 
         res = lista_referencia(conn, posts_id[2])
         self.assertCountEqual(res, (passaros_id[2], passaros_id[0]))
+
+    def test_update_ativo_referencia(self):
+        titulo = 'titulo passaro'
+        texto = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
+        id_post = find_post(conn, titulo)
+        insert_passaro(conn, 'Flamingo')
+        id_passaro = find_passaro(conn, 'Flamingo')
+        insert_referencia(conn,id_post, id_passaro)
+        #tenta mudar ativo
+        update_referencia_ativo(conn, id_post, id_passaro, 0)
+
+##########################################################################################################
+#joinha
+##########################################################################################################
+    def test_insert_joinha(self):
+
+        titulo = 'titulo passaro'
+        titulo2 = 'titulo passaro2'
+        titulo3 = 'titulo passaro 3'
+        texto = 'Novo passaro encontrado'
+        texto2 = 'Novo passaro encontrado'
+        texto3 = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+    
+
+        # Cria alguns usuarios
+        usuarios_id = []
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_usuario(conn,'Joao','Pieroni','jp@gmail.com','joaopedro',id_cidade)
+        id_usuario2 = find_usuario(conn,'Joao','Pieroni')
+        insert_usuario(conn,'Rachel','Moraes','rm@gmail.com','rmmmmms',id_cidade)
+        id_usuario3 = find_usuario(conn,'Rachel','Moraes')
+        usuarios_id.append(find_usuario(conn,'Joao','Castro' ))
+        usuarios_id.append(find_usuario(conn,'Joao','Pieroni' ))
+        usuarios_id.append(find_usuario(conn,'Rachel','Moraes' ))
+
+        #cria alguns posts
+        posts_id = []
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
+        id_post = find_post(conn, titulo)
+        insert_post(conn,id_usuario2, titulo2, texto2, url_foto)
+        id_post = find_post(conn, titulo2)
+        insert_post(conn,id_usuario3, titulo3, texto3, url_foto)
+        id_post = find_post(conn, titulo3)
+        posts_id.append(find_post(conn,titulo ))
+        posts_id.append(find_post(conn,titulo2 ))
+        posts_id.append(find_post(conn,titulo3 ))
+
+        # adiciona preferencia de passaro.
+        insert_joinha(conn,posts_id[0], usuarios_id[0],1)
+        insert_joinha(conn,posts_id[1], usuarios_id[1],1)
+        insert_joinha(conn,posts_id[2], usuarios_id[2],0)
+        insert_joinha(conn,posts_id[0], usuarios_id[1],0)
+        insert_joinha(conn,posts_id[1], usuarios_id[2],1)
+        insert_joinha(conn,posts_id[2], usuarios_id[0],0)
+    
+
+        res = lista_joinhas(conn, posts_id[0])
+        self.assertCountEqual(res, (usuarios_id[0], usuarios_id[1]))
+
+        res = lista_joinhas(conn, posts_id[1])
+        self.assertCountEqual(res, (usuarios_id[1], usuarios_id[2]))
+
+        res = lista_joinhas(conn, posts_id[2])
+        self.assertCountEqual(res, (usuarios_id[2], usuarios_id[0]))
+    def test_update_ativo_joinha(self):
+        titulo = 'titulo passaro'
+        texto = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
+        id_post = find_post(conn, titulo)
+        insert_joinha(conn,id_post, id_usuario,1)
+        #tenta mudar ativo
+        update_joinha_ativo(conn, id_post, id_usuario, 0)
+    def test_update_reacao_joinha(self):
+        titulo = 'titulo passaro'
+        texto = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_post(conn,id_usuario, titulo, texto, url_foto)
+        id_post = find_post(conn, titulo)
+        insert_joinha(conn,id_post, id_usuario,1)
+        #tenta mudar ativo
+        update_reacao_joinha(conn, id_post, id_usuario, 0)
+##########################################################################################################
+#segue
+##########################################################################################################
+
+    def test_insert_segue(self):
+
+        titulo = 'titulo passaro'
+        titulo2 = 'titulo passaro2'
+        titulo3 = 'titulo passaro 3'
+        texto = 'Novo passaro encontrado'
+        texto2 = 'Novo passaro encontrado'
+        texto3 = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+    
+
+        # Cria alguns usuarios
+        usuarios_id = []
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_usuario(conn,'Joao','Pieroni','jp@gmail.com','joaopedro',id_cidade)
+        id_usuario2 = find_usuario(conn,'Joao','Pieroni')
+        insert_usuario(conn,'Rachel','Moraes','rm@gmail.com','rmmmmms',id_cidade)
+        id_usuario3 = find_usuario(conn,'Rachel','Moraes')
+        usuarios_id.append(find_usuario(conn,'Joao','Castro' ))
+        usuarios_id.append(find_usuario(conn,'Joao','Pieroni' ))
+        usuarios_id.append(find_usuario(conn,'Rachel','Moraes' ))
+
+        # adiciona preferencia de passaro.
+        insert_segue(conn,usuarios_id[0], usuarios_id[1])
+        insert_segue(conn,usuarios_id[0], usuarios_id[2])
+        insert_segue(conn,usuarios_id[1], usuarios_id[0])
+        insert_segue(conn,usuarios_id[1], usuarios_id[2])
+        insert_segue(conn,usuarios_id[2], usuarios_id[1])
+        insert_segue(conn,usuarios_id[2], usuarios_id[0])
+    
+
+        res = lista_seguidas(conn, usuarios_id[0])
+        self.assertCountEqual(res, (usuarios_id[1], usuarios_id[2]))
+
+        res = lista_seguidas(conn, usuarios_id[1])
+        self.assertCountEqual(res, (usuarios_id[0], usuarios_id[2]))
+
+        res = lista_seguidas(conn, usuarios_id[2])
+        self.assertCountEqual(res, (usuarios_id[0], usuarios_id[1]))
+    def test_update_ativo_segue(self):
+        titulo = 'titulo passaro'
+        texto = 'Novo passaro encontrado'
+        url_foto = 'foto.com.br'
+
+        conn = self.__class__.connection
+
+        insert_cidade(conn,'Campinas')
+        id_cidade = find_cidade(conn,'Campinas')
+        insert_usuario(conn,'Joao','Castro','jc@gmail.com','joaopedrocastro',id_cidade)
+        id_usuario = find_usuario(conn,'Joao','Castro')
+        insert_usuario(conn,'Rachel','Moraes','rm@gmail.com','rachel100',id_cidade)
+        id_usuario2 = find_usuario(conn,'Rachel','Moraes')
+        insert_segue(conn,id_usuario2, id_usuario)
+        #tenta mudar ativo
+        update_segue_ativo(conn, id_usuario2, id_usuario, 0)
 
 def run_sql_script(filename):
     global config
@@ -754,3 +940,4 @@ if __name__ == '__main__':
         config = json.load(f)
     logging.basicConfig(filename=config['LOGFILE'], level=logging.DEBUG)
     unittest.main(verbosity=2)
+

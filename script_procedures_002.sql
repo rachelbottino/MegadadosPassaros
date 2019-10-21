@@ -55,3 +55,27 @@ BEGIN
 	INSERT INTO referencia (id_post, id_passaro) VALUES (id_post, id_passaro);
 END//
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS adiciona_joinha;
+DELIMITER //
+CREATE PROCEDURE adiciona_joinha(IN id_post INT, IN id_usuario INT, IN reacao BOOLEAN)
+BEGIN
+	INSERT INTO joinha(id_post, id_usuario, reacao) VALUES (id_post, id_usuario, reacao);
+END//
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS adiciona_segue;
+DELIMITER //
+CREATE PROCEDURE adiciona_segue(IN id_usuario INT, IN id_usuario_seguido INT)
+BEGIN
+	INSERT INTO segue (id_usuario, id_usuario_seguido) VALUES (id_usuario, id_usuario_seguido);
+END//
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS adiciona_visualizacao;
+DELIMITER //
+CREATE PROCEDURE adiciona_visualizacao(IN id_post INT, IN id_usuario INT, IN aparelho VARCHAR(50), IN browser varchar(50), IN ip VARCHAR(20), IN instante datetime)
+BEGIN
+	INSERT INTO visualizou (id_post, id_usuario, aparelho, browser, ip, instante) VALUES (id_post, id_usuario, aparelho, browser, ip, instante);
+END//
+DELIMITER ;
